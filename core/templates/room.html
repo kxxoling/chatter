@@ -1,0 +1,58 @@
+{% load compress static gravatar %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+{% compress css inline %}
+  <link rel="stylesheet" type="text/stylus" href="{% static 'styles/room.styl' %}"/>
+{% endcompress %}
+
+  <div class="container">
+
+      <div class="col-sm-12 message_section">
+        <div class="row">
+          <div class="new_message_head">
+            <div class="pull-left">New Message</div>
+            <div class="pull-right">
+              <div class="dropdown">
+                <button class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Settings<i class="caret"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!--new_message_head-->
+          <div class="chat_area pre-scrollable">
+            <ul class="list-unstyled" id="chat">
+              {% for message in messages reversed %}
+              <li class="left clearfix">
+                <span class="chat-img pull-left">
+                  {% gravatar message.sender.email css_class='img-circle' %}
+                </span>
+                <div class="chat-body">
+                  <p>{{ message.message }}</p>
+                  <div class="chat_time pull-right">{{ message.timestamp | date:'Y-m-d H:i'  }}</div>
+                </div>
+              </li>
+              {% endfor %}
+              <hr>
+            </ul>
+          </div>
+
+          <div class="message_write pull-left" id="chatroom">
+            <textarea name="message" id="message" class="form-control" placeholder="Write a message"></textarea>
+            <button id="submit" value="Send" class="pull-right btn btn-success">Send</button>
+          </div>
+        </div>
+      </div>
+
+  </div>
+<script>
+  window.user = '{{ user.get_username }}';
+</script>
+
+<script src="{% static 'scripts/chat.js' %}"></script>

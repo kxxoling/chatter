@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[dev-packages]
+django-extensions = "*"
+ipython = "*"
+asgiref = "*"
+Werkzeug = "*"
+asgi_ipc = "*"
+
+[packages]
+channels = "*"
+daphne = "*"
+Django = "*"
+asgi_redis = "*"
+django_compressor = "*"
+django-gravatar2 = "*"
