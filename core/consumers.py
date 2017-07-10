@@ -63,9 +63,16 @@ def ws_receive(message):
         return
 
     if data:
-        log.debug('Chatting in room=%s: message=%s', room.label, data['message'])
+        log.debug('Chatting in room=%s: message=%s', room.label, data)
         msg = room.messages.create(**data, sender=message.user)
-        data.update(user=message.user and message.user.username or '[Anonymous]',
+        if message.user:
+            username = message.user.username
+            name = message.user.first_name
+        else:
+            username = None
+            name = '[Anonymous]'
+        data.update(username=username,
+                    name=name,
                     timestamp=time.mktime(msg.timestamp.timetuple()),
                     avatar=message.user and get_gravatar_url(message.user.email) or None)
         Group('chat-%s' % label, channel_layer=message.channel_layer).send({'text': json.dumps(data)})

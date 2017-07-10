@@ -4,8 +4,6 @@ from django.db.models.fields import TextField, SlugField, DateTimeField, CharFie
 from django.db.models import ForeignKey
 from django.contrib.auth import get_user_model
 
-from django.utils import timezone
-
 
 User = get_user_model()
 
